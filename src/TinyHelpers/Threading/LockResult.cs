@@ -18,10 +18,5 @@ public enum LockResult
     /// <summary>
     /// The lock operation was canceled.
     /// </summary>
-    Canceled,
-    
-    /// <summary>
-    /// The lock operation had an invalid timeout.
-    /// </summary>
-    InvalidTimeout
+    Canceled
 }

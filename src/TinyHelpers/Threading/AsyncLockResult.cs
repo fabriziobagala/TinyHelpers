@@ -24,5 +24,4 @@ public readonly struct AsyncLockResult
     internal static AsyncLockResult Success(AsyncLock @lock) => new(@lock, LockResult.Success);
     internal static AsyncLockResult Timeout() => new(null, LockResult.Timeout);
     internal static AsyncLockResult Canceled() => new(null, LockResult.Canceled);
-    internal static AsyncLockResult InvalidTimeout() => new(null, LockResult.InvalidTimeout);
 }

@@ -34,13 +34,7 @@ public class AsyncLock : IDisposable
     /// <returns>A task that returns an <see cref="AsyncLockResult"/>.</returns>
     public async Task<AsyncLockResult> LockAsync(TimeSpan timeout, CancellationToken cancellationToken = default)
     {
-        var totalMilliseconds = (long)timeout.TotalMilliseconds;
-        if (totalMilliseconds is < (-1) or > int.MaxValue)
-        {
-            return AsyncLockResult.InvalidTimeout();
-        }
-
-        var acquired = await semaphoreSlim.WaitAsync((int)totalMilliseconds, cancellationToken).ConfigureAwait(false);
+        var acquired = await semaphoreSlim.WaitAsync(timeout, cancellationToken).ConfigureAwait(false);
         if (acquired)
         {
             return AsyncLockResult.Success(this);
@@ -59,11 +53,6 @@ public class AsyncLock : IDisposable
     /// <returns>A task that returns an <see cref="AsyncLockResult"/>.</returns>
     public async Task<AsyncLockResult> LockAsync(int millisecondsTimeout, CancellationToken cancellationToken = default)
     {
-        if (millisecondsTimeout < -1)
-        {
-            return AsyncLockResult.InvalidTimeout();
-        }
-
         var acquired = await semaphoreSlim.WaitAsync(millisecondsTimeout, cancellationToken).ConfigureAwait(false);
         if (acquired)
         {
